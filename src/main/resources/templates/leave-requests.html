@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                Menu
+            </a>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a th:href="@{/leave/requests}" class="text-decoration-none">Leave Requests</a></li>
+                        <li class="list-group-item"><a th:href="@{/attendance/analytics}" class="text-decoration-none">Attendance Analytics</a></li>
+                        <li class="list-group-item"><a th:href="@{/employees}" class="text-decoration-none">All Employees</a></li>
+                        <li class="list-group-item"><a th:href="@{/employees/create}" class="text-decoration-none">Create Employee</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/logout}" class="text-decoration-none">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header">
+                            Leave Requests
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="leave : ${leaves}">
+                                    <td th:text="${leave.employee?.firstName} + ' ' + ${leave.employee?.lastName}"></td>
+                                    <td th:text="${#temporals.format(leave.startDate, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#temporals.format(leave.endDate, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${leave.reason}"></td>
+                                    <td th:text="${leave.approvalStatus}"></td>
+                                    <td>
+                                        <a th:href="@{/leave/approve/{id}(id=${leave.id})}" class="btn btn-primary">
+                                            Update
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+

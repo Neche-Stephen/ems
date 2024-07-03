@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Request</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                Menu
+            </a>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><a th:href="@{/leave/requests}" class="text-decoration-none">Leave Requests</a></li>
+                        <li class="list-group-item"><a th:href="@{/attendance/analytics}" class="text-decoration-none">Attendance Analytics</a></li>
+                        <li class="list-group-item"><a th:href="@{/employees}" class="text-decoration-none">All Employees</a></li>
+                        <li class="list-group-item"><a th:href="@{/employees/create}" class="text-decoration-none">Create Employee</a></li>
+                        <li class="list-group-item"><a th:href="@{/admin/logout}" class="text-decoration-none">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <form th:action="@{/employees/update/{id}(id=${employee.id})}" th:object="${employee}" method="POST">
+                <div class="form-group">
+                    <label>Employee First Name</label>
+                    <input
+                            type="text"
+                            name="firstName"
+                            th:field="*{firstName}"
+                            class="form-control"
+                            placeholder="Enter Employee First Name"
+                    >
+                </div>
+                <div class="form-group">
+                    <label>Employee Last Name</label>
+                    <input
+                            type="text"
+                            name="lastName"
+                            th:field="*{lastName}"
+                            class="form-control"
+                            placeholder="Enter Employee Last Name"
+                    >
+                </div>
+                <div class="form-group">
+                    <label>Employee Email</label>
+                    <input
+                            type="email"
+                            name="email"
+                            th:field="*{email}"
+                            class="form-control"
+                            placeholder="Enter Employee Email"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" th:field="*{gender}" class="form-control">
+                        <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender}">Select Gender</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" th:field="*{department}" class="form-control">
+                        <option th:each="department : ${departments}" th:value="${department}" th:text="${department}">Select Department</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rank">Rank</label>
+                    <select id="rank" th:field="*{jobRank}" class="form-control" onchange="setSalary()">
+                        <option th:each="rank : ${ranks}" th:value="${rank}" th:text="${rank}">Select Rank</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input
+                            type="text"
+                            id="salary"
+                            name="salary"
+                            th:field="*{salary}"
+                            class="form-control"
+                            placeholder="Salary"
+                    >
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function setSalary() {
+      const rank = document.getElementById("rank").value;
+      const salaryField = document.getElementById("salary");
+      let salary;
+
+      switch(rank) {
+        case 'ENTRY_LEVEL':
+          salary = 300000;
+          break;
+        case 'JUNIOR_LEVEL':
+          salary = 400000;
+          break;
+        case 'MID_LEVEL':
+          salary = 500000;
+          break;
+        case 'SENIOR_LEVEL':
+          salary = 750000;
+          break;
+        default:
+          salary = '';
+      }
+
+      salaryField.value = salary;
+    }
+
+    function setDefaultSalary() {
+      const rank = document.getElementById("rank").value;
+      setSalary(rank);
+    }
+
+    window.onload = setDefaultSalary;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
